@@ -16,7 +16,7 @@
 <body>
     <header>
         <div class="jumbotron jumbotron-fluid">
-            <div class="container">
+            <div class="container" data-infinite-scroll='{ "path": ".pagination__next", "append": ".post", "history": false }''>
                 <h1 class="display-3">The GIF House</h1>
                 <p class="lead">Jumbo helper text</p>
                 <hr class="my-2">
@@ -30,17 +30,20 @@
     <div class="container">
         <div class="row">
             <div class="col">
-                <div class="tag-holder">
+                <div id="tag-holder">
 
                 </div>
-                <div class="tage-search">
+                <div id="tag-search">
+                    <textarea id="tag-bar" rows="1" cols="10"></textarea>
+                    <button id="search-button">Search</button>
 
                 </div>
             </div>
         </div>
         <div class="row">
             <div class="col">
-                <div class="gif-house">
+                <div id="gif-house">
+
 
                 </div>
 
@@ -54,6 +57,9 @@
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"
         integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/infinite-scroll@3/dist/infinite-scroll.pkgd.js"></script>
+    <!-- or -->
+    <script src="https://unpkg.com/masonry-layout@4/dist/masonry.pkgd.js"></script>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
         integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous">
