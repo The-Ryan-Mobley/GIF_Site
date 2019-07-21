@@ -19,7 +19,7 @@ $(window).on("load", function () {
             }).then((response) => {
                 console.log(response);
                 response.data.forEach((element) => {
-                    let gif = $('<img class="gifs">');
+                    let gif = $('<img class="gifs grid-item">');
                     gif.attr("src", element.images.downsized.url);
                     gif.appendTo(house);
                 });
@@ -52,11 +52,11 @@ $(window).on("load", function () {
         search_api();
 
     });
-    $('.container').infiniteScroll({
-        // options
-        path: ".pagination__next",
-        append: '.post',
-        history: false,
-      });
+    // house.infiniteScroll({
+    //     // options
+    //     path: ".pagination__next",
+    //     append: '.gifs',
+    //     history: false,
+    //   });
  
 });
