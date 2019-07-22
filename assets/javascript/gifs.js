@@ -12,17 +12,15 @@ $(window).on("load", function () {
     var search_btn = $("#search-button");
     var start = 10;
     var working = false;
-    class gif_obj{
-        constructor(url, tag, id, rate){
-            this.gif_url = url;
-            this.gif_tag = tag;
-            this.gif_id = id;
-            this.gif_rating = rate;
+    class gif_obj{                                                                          //end result of data tree
+        constructor(url, tag, id, rate){                                                    //        root
+            this.gif_url = url;                                                             //       /    \
+            this.gif_tag = tag;                                                             //     tag    tag
+            this.gif_id = id;                                                               //    /   \  /   \
+            this.gif_rating = rate;                                                         //  gif  gifgif  gif
             this.gif_room = $('<div class="gif-holder">');
             this.gif_img = $('<img class="gifs">');
             this.rating_display = $('<p class="rating-text">');
-            this.is_parent = false;
-            this.is_child = false;
         }
         make_gif(){
             
