@@ -12,6 +12,7 @@ $(window).on("load", function () {
     var search_btn = $("#search-button");
     var start = 10;
     var working = false;
+    var hood = new gif_hood("root");
     class gif_obj{                                                                          //end result of data tree
         constructor(url, tag, id, rate){                                                    //        root
             this.gif_url = url;                                                             //       /    \
@@ -42,28 +43,37 @@ $(window).on("load", function () {
     class node{
         constructor(data){
             this.data = data;
+            this.parent = null;
             this.children =[];
         }
 
     }
     //https://code.tutsplus.com/articles/data-structures-with-javascript-tree--cms-23393
     class gif_hood{
-        constructor(){
-            this.root = null;
+        constructor(data){
+            this.root = new node("root");
+            
         }
         
         add_node(data, toData, traverse){
             let gif_node = new node(data);
-            if(root === null){
-                root = gif_node;
-            }
-            else{
-                this.root.children.push(gif_node);
-            }
+            gif_node.parent = this.toData;
+            this.root.children.push(gif_node);
+                
 
         }
-        dfs_search(){
+        df_traversal(callback){
+            (function recurse(currentNode){
+                for (var i = 0, length = currentNode.children.length; i < length; i++) {
+                    recurse(currentNode.children[i]);
+                }
+                callback(currentNode);
 
+            })(this.root);
+
+        }
+        bf_traversal(callback){
+            
         }
 
 
