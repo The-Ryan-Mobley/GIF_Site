@@ -21,6 +21,8 @@ $(window).on("load", function () {
             this.gif_room = $('<div class="gif-holder">');
             this.gif_img = $('<img class="gifs">');
             this.rating_display = $('<p class="rating-text">');
+            this.is_parent = false;
+            this.is_child = false;
         }
         make_gif(){
             
@@ -38,6 +40,35 @@ $(window).on("load", function () {
             this.gif_room.appendTo(house);
 
         }
+    }
+    class node{
+        constructor(data){
+            this.data = data;
+            this.children =[];
+        }
+
+    }
+    //https://code.tutsplus.com/articles/data-structures-with-javascript-tree--cms-23393
+    class gif_hood{
+        constructor(){
+            this.root = null;
+        }
+        
+        add_node(data, toData, traverse){
+            let gif_node = new node(data);
+            if(root === null){
+                root = gif_node;
+            }
+            else{
+                this.root.children.push(gif_node);
+            }
+
+        }
+        dfs_search(){
+
+        }
+
+
     }
 
     function search_api() { //used for first set of gifs
@@ -80,7 +111,7 @@ $(window).on("load", function () {
                 start+=5;
                 setTimeout(()=>{
                     working = false;
-                }, 2000);
+                }, 4000);
 
             });
 
