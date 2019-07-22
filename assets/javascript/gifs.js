@@ -1,6 +1,7 @@
 $(window).on("load", function () {
-    var search_tags = ["cats", "dogs", "laugh"];
+    var search_tags = ["cats", "dogs", "laugh","shrek","The Office","Dave Chapelle"];
     var id_list =[];
+    var obj_list =[];
     //var gify_trend = "https://api.giphy.com/v1/gifs/trending?api_key=eKe5uDNPkEck1b04Tz1bRYnaiJtZ2OvW";
     //var $x = jQuery.noConflict(); put in window load if use othe rlibraries
     //tags need to be able to be deleted on an x button
@@ -11,28 +12,52 @@ $(window).on("load", function () {
     var search_btn = $("#search-button");
     var start = 10;
     var working = false;
-    class gif_data{
-        constructor(url, tag, id){
+    class gif_obj{
+        constructor(url, tag, id, rate){
             this.gif_url = url;
             this.gif_tag = tag;
             this.gif_id = id;
+            this.gif_rating = rate;
+            this.gif_room = $('<div class="gif-holder">');
+            this.gif_img = $('<img class="gifs">');
+            this.rating_display = $('<p class="rating-text">');
+        }
+        make_gif(){
+            
+           this.gif_room.appendTo(house);
+           this.gif_img.appendTo(this.gif_room);
+           this.gif_img.attr('src',this.gif_url);
+           this.rating_display.appendTo(this.gif_room);
+           this.rating_display.html('Rating :' + this.gif_rating);
+        }
+        detach_gif(){
+            this.gif_room.detach();
+
+        }
+        attach_gif(){
+            this.gif_room.appendTo(house);
+
         }
     }
 
-    function search_api() {
+    function search_api() { //used for first set of gifs
         house.empty();
         search_tags.forEach((index) => {
-            var gif_search = "https://api.giphy.com/v1/gifs/search?q=" + index + "&limit=" + start +"&api_key=eKe5uDNPkEck1b04Tz1bRYnaiJtZ2OvW";
+            var gif_search = "https://api.giphy.com/v1/gifs/search?q=" + index + "&limit=10&api_key=eKe5uDNPkEck1b04Tz1bRYnaiJtZ2OvW";
             $.ajax({
                 url: gif_search,
                 method: "GET"
             }).then((response) => {
                 console.log(response);
                 response.data.forEach((element) => {
+                    let obj = new gif_obj(element.images.downsized.url,index,element.id,element.rating); //implimenting object to control dom manipulation
+                    obj.make_gif();
+                    obj_list.push(obj);
+
                     id_list.push(element.id);
-                    let gif = $('<img class="gifs grid-item">');
-                    gif.attr("src", element.images.downsized.url);
-                    gif.appendTo(house);
+                    // let gif = $('<img class="gifs grid-item">');
+                    // gif.attr("src", element.images.downsized.url);
+                    // gif.appendTo(house);
                 });
             });
         });
@@ -46,16 +71,16 @@ $(window).on("load", function () {
             }).then((response)=>{
                 response.data.forEach((element) => {
                         if(id_list.includes(element.id) === false){
+                            let obj = new gif_obj(element.images.downsized.url,index,element.id,element.rating);
+                            obj.make_gif();
+                            obj_list.push(obj);
                             id_list.push(element.id);
-                            let gif = $('<img class="gifs grid-item">');
-                            gif.attr("src", element.images.downsized.url);
-                            gif.appendTo(house);
                         }
                 });
                 start+=5;
                 setTimeout(()=>{
                     working = false;
-                }, 4000);
+                }, 2000);
 
             });
 

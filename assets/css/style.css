@@ -16,8 +16,18 @@ html{
     margin: 0 10% 0 10%;
 }
 .gifs{
-    text-align: center;
+    
     max-height:200px;
     max-width:200px;
     padding:1%;
+}
+.rating-text{
+    color:#ffffff;
+    font-weight: bold;
+}
+.gif-holder{
+    float:left;
+    text-align: center;
+    max-width: 200px;
+    max-height:200px;
 }
