@@ -1,5 +1,5 @@
 $(window).on("load", function () {
-    var search_tags = ["cats", "dogs", "laugh","shrek","The Office","Dave Chapelle"];
+    var search_tags = ["Bob Ross", "Simpsons", "Honey Badger","shrek","The Office","Dave Chapelle"];
     var id_list =[];
     var obj_list =[];
     //var gify_trend = "https://api.giphy.com/v1/gifs/trending?api_key=eKe5uDNPkEck1b04Tz1bRYnaiJtZ2OvW";
@@ -12,24 +12,39 @@ $(window).on("load", function () {
     var search_btn = $("#search-button");
     var start = 10;
     var working = false;
-    var hood = new gif_hood("root");
+    
     class gif_obj{                                                                          //end result of data tree
-        constructor(url, tag, id, rate){                                                    //        root
+        constructor(url, tag, id, rate, thumb){                                                    //        root
             this.gif_url = url;                                                             //       /    \
             this.gif_tag = tag;                                                             //     tag    tag
             this.gif_id = id;                                                               //    /   \  /   \
-            this.gif_rating = rate;                                                         //  gif  gifgif  gif
+            this.gif_rating = rate;
+            this.gif_thumbnail=thumb;                                                         //  gif  gifgif  gif
             this.gif_room = $('<div class="gif-holder">');
             this.gif_img = $('<img class="gifs">');
             this.rating_display = $('<p class="rating-text">');
+            this.playing=false;
         }
         make_gif(){
             
            this.gif_room.appendTo(house);
            this.gif_img.appendTo(this.gif_room);
-           this.gif_img.attr('src',this.gif_url);
+           this.gif_img.attr('src',this.gif_thumbnail);
            this.rating_display.appendTo(this.gif_room);
            this.rating_display.html('Rating :' + this.gif_rating);
+           this.gif_room.data("obj",this.constructor);
+           console.log(this.gif_room.data("obj"));
+           
+        }
+        swap_gif(){
+            if(this.playing===false){
+                this.gif_img.attr('src', this.gif_url);
+                this.playing=true;
+            }
+            else{
+                this.gif_img.attr('src', this.gif_thumbnail);
+                this.playing=false;
+            }
         }
         detach_gif(){
             this.gif_room.detach();
@@ -37,7 +52,6 @@ $(window).on("load", function () {
         }
         attach_gif(){
             this.gif_room.appendTo(house);
-
         }
     }
     class node{
@@ -55,14 +69,26 @@ $(window).on("load", function () {
             
         }
         
-        add_node(data, toData, traverse){
+        add_node(data, toData, traversal){
             let gif_node = new node(data);
-            gif_node.parent = this.toData;
-            this.root.children.push(gif_node);
+            gif_node.parent = null;
+            toData.children.push(gif_node);
+            callback = function(node){
+                if (node.data === toData) {
+                    parent = node;
+                }
+            };
+            this.contains(callback, traversal);
+            if (parent) {
+                parent.children.push(gif_node);
+                gif_node.parent = parent;
+            } else {
+                throw new Error('Cannot add node to a non-existent parent.');
+            }
                 
 
         }
-        df_traversal(callback){
+        depth_first_traversal(callback){
             (function recurse(currentNode){
                 for (var i = 0, length = currentNode.children.length; i < length; i++) {
                     recurse(currentNode.children[i]);
@@ -70,16 +96,16 @@ $(window).on("load", function () {
                 callback(currentNode);
 
             })(this.root);
+            
 
         }
-        bf_traversal(callback){
-            
-        }
+        
 
 
     }
+    var hood = new gif_hood("root");
 
-    function search_api() { //used for first set of gifs
+    function search_api() { //used for first set of gifs assign data from apicall here
         house.empty();
         search_tags.forEach((index) => {
             var gif_search = "https://api.giphy.com/v1/gifs/search?q=" + index + "&limit=10&api_key=eKe5uDNPkEck1b04Tz1bRYnaiJtZ2OvW";
@@ -89,17 +115,20 @@ $(window).on("load", function () {
             }).then((response) => {
                 console.log(response);
                 response.data.forEach((element) => {
-                    let obj = new gif_obj(element.images.downsized.url,index,element.id,element.rating); //implimenting object to control dom manipulation
+                    let obj = new gif_obj(element.images.downsized.url,index,element.id,element.rating,element.images.original_still.url); //implimenting object to control dom manipulation
                     obj.make_gif();
                     obj_list.push(obj);
 
                     id_list.push(element.id);
-                    // let gif = $('<img class="gifs grid-item">');
-                    // gif.attr("src", element.images.downsized.url);
-                    // gif.appendTo(house);
                 });
+                    
             });
-        });
+            });
+          
+    }
+    function tie_gif_data(obj,div){
+        div.data("obj",obj);
+
     }
     function scroll_api(){
         search_tags.forEach((index) =>{
@@ -110,13 +139,15 @@ $(window).on("load", function () {
             }).then((response)=>{
                 response.data.forEach((element) => {
                         if(id_list.includes(element.id) === false){
-                            let obj = new gif_obj(element.images.downsized.url,index,element.id,element.rating);
+                            let obj = new gif_obj(element.images.downsized.url,index,element.id,element.rating,element.images.original_still.url);
                             obj.make_gif();
+
+
                             obj_list.push(obj);
                             id_list.push(element.id);
                         }
                 });
-                start+=5;
+                start++;
                 setTimeout(()=>{
                     working = false;
                 }, 4000);
@@ -162,7 +193,16 @@ $(window).on("load", function () {
         search_api();
 
     });
-    
+
+    $("#to-top").click(()=>{
+
+    });
+    house.on("click", ".gif-holder", (event)=>{
+        let gif_room = house.find(event.target);
+        console.log( house.find(event.target).data("obj"));
+        //gif_room.data("obj",gif_obj.swap_gif());
+
+    });
     
  
 });
