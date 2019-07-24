@@ -109,12 +109,13 @@ $(window).on("load", function () {
             }).then((response) => {
                 console.log(response);
                 response.data.forEach((element) => {
-                    let gif_room = $('<div class="gif-holder">');
+                    let gif_room = $('<div class="gif-holder grid-item">');
                     let gif_img = $('<img class="gifs">');
                     let obj = new gif_obj(element.images.downsized.url,index,element.id,
                     element.rating,element.images.original_still.url);
                     obj.make_gif(gif_room,gif_img);
                     gif_img.data("obj",obj);
+                    get_grid_class(element,gif_img);
                     obj_list.push(obj);
 
                     id_list.push(element.id);
@@ -134,7 +135,7 @@ $(window).on("load", function () {
             }).then((response)=>{
                 response.data.forEach((element) => {
                         if(id_list.includes(element.id) === false){
-                            let gif_room = $('<div class="gif-holder">');
+                            let gif_room = $('<div class="gif-holder grid-item">');
                             let gif_img = $('<img class="gifs">');
                             let obj = new gif_obj(element.images.downsized.url,index,element.id,element.rating,element.images.original_still.url);
                             
@@ -163,6 +164,25 @@ $(window).on("load", function () {
 
         });
     }
+    function get_grid_class(data, elem){
+        if(data.images.downsized.width >= "360"){
+            elem.addClass("grid-item--width3");
+        }
+        else if(data.images.downsized.width >= "260"){
+            elem.addClass("grid-item--width2");
+
+        }
+        if(data.images.downsized.height >= "360"){
+            elem.addClass("grid-item--height3");
+        }
+        else if(data.images.downsized.height >= "260"){
+            elem.addClass("grid-item--height2");
+
+        }
+
+        
+
+    }
 
     //*************************************************Code Starts Here*****************************************************/
     $(window).scroll(()=>{
@@ -188,6 +208,10 @@ $(window).on("load", function () {
         search_api();
 
     });
+    // tag_holder.on('click','.tag',()=>{
+    //     this.remove();
+
+    // });
 
     $("#to-top").click(()=>{
         $(window).scrollTop(250);
@@ -197,6 +221,23 @@ $(window).on("load", function () {
         let gif_room = house.find(event.target);
         gif_room.data("obj").swap_gif(gif_room);
     });
-    
+    house.on('hover', ".gif-holder", (event)=>{
+        
+    });
+    $("#theme-button").on('click',()=>{
+        if($(document.body).hasClass('day')){
+            $(document.body).removeAttr("class");
+            $(document.body).attr('class', 'night');
+        }
+        else{
+            $(document.body).removeAttr("class");
+            $(document.body).attr('class', 'day');
+        }
+    });
+    $('.grid').masonry({
+        
+        itemSelector: '.grid-item',
+        columnWidth: 300,
+      });
  
 });

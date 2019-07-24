@@ -1,5 +1,13 @@
-*{
-    background-image: url(../images/dark-honeycomb.png);
+
+.day{
+    background-color:#ffffff;
+    color:black;
+
+}
+.night{
+    background-color:black;
+    color:#ffffff;
+
 }
 html{
     /* overflow: -moz-scrollbars-vertical;  */
@@ -15,29 +23,57 @@ html{
 #gif-house{
     margin: 0 10% 0 10%;
 }
-.gifs{
-    
-    max-height:200px;
-    max-width:200px;
+
+.rating-text{
+    font-weight: bold;
     padding:1%;
 }
-.rating-text{
-    color:#ffffff;
-    font-weight: bold;
-}
+.grid {
+    max-width: 75.000em;
+  }
+
+.grid:after {
+    content: '';
+    display: block;
+    clear: both;
+  }
+.grid-item {
+    float: left;
+    width: 11.250em;
+    height: 10.000em;
+    padding:1%;
+    
+  }
+
+.grid-item--width2 { width: 16.250em; }
+.grid-item--width3 { width: 22.500em; }
+
+
+.grid-item--height2 { height: 16.250em; }
+.grid-item--height3 { height: 22.500em; }
+
+.gifs{
+    max-width: 11.250em;
+    max-height: 10.000em;
+    padding:1%;
+
+  }
 .gif-holder{
-    float:left;
     text-align: center;
-    max-width: 200px;
-    max-height:200px;
+    padding:1%;
 }
 #to-top{
     position: fixed;
     bottom:0%;
     text-align: center;
-    color:#ffffff;
+    
     padding:0.5%;
     background-color: #3e5f85;
     background-image: linear-gradient(315deg, #3e5f85 0%, #0d324d 74%);
 
 }
+#theme-button{
+    float:right;
+}
+
+
