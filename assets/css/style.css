@@ -1,11 +1,11 @@
 
 .day{
-    background-color:#ffffff;
+    background-color:#edf7ff;
     color:black;
 
 }
 .night{
-    background-color:black;
+    background-color:#292c2e;
     color:#ffffff;
 
 }
@@ -17,8 +17,8 @@ html{
     
     color:#ffffff;
     padding:2%;
-    background-color: #3e5f85;
-    background-image: linear-gradient(315deg, #3e5f85 0%, #0d324d 74%);
+    background-color: #5cb6cc;
+    
 }
 #gif-house{
     margin: 0 10% 0 10%;
@@ -68,8 +68,8 @@ html{
     text-align: center;
     
     padding:0.5%;
-    background-color: #3e5f85;
-    background-image: linear-gradient(315deg, #3e5f85 0%, #0d324d 74%);
+    background-color: #5cb6cc;
+    
 
 }
 #theme-button{
