@@ -208,10 +208,17 @@ $(window).on("load", function () {
         search_api();
 
     });
-    // tag_holder.on('click','.tag',()=>{
-    //     this.remove();
 
-    // });
+
+    tag_holder.on('click','.tag',(event)=>{
+        let targeted = tag_holder.find(event.target)
+        $('.gifs').each(function(event){
+            
+
+        });
+        //tag_holder.find(event.target).remove();
+
+    });
 
     $("#to-top").click(()=>{
         $(window).scrollTop(250);
@@ -220,6 +227,7 @@ $(window).on("load", function () {
     house.on("click", ".gif-holder", (event)=>{
         let gif_room = house.find(event.target);
         gif_room.data("obj").swap_gif(gif_room);
+        
     });
     house.on('hover', ".gif-holder", (event)=>{
         

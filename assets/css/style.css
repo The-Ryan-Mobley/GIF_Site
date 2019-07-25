@@ -2,11 +2,21 @@
 .day{
     background-color:#edf7ff;
     color:black;
+    text-shadow:
+		-1px -1px 0 #ffffff,
+		1px -1px 0 #ffffff,
+		-1px 1px 0 #ffffff,
+		1px 1px 0 #ffffff;
 
 }
 .night{
     background-color:#292c2e;
     color:#ffffff;
+    text-shadow:
+		-1px -1px 0 #000,
+		1px -1px 0 #000,
+		-1px 1px 0 #000,
+		1px 1px 0 #000;
 
 }
 html{
@@ -14,10 +24,17 @@ html{
     overflow-y: scroll;
 }
 .tag{
-    
+    border-radius: 1em;
+    border-style:none;
     color:#ffffff;
-    padding:2%;
-    background-color: #5cb6cc;
+    text-shadow:
+		-1px -1px 0 #000,
+		1px -1px 0 #000,
+		-1px 1px 0 #000,
+		1px 1px 0 #000;
+    padding:1%;
+    margin:1%;
+    background-color: #226e81;
     
 }
 #gif-house{
@@ -26,7 +43,7 @@ html{
 
 .rating-text{
     font-weight: bold;
-    padding:1%;
+    margin:1%;
 }
 .grid {
     max-width: 75.000em;
@@ -63,12 +80,20 @@ html{
     padding:1%;
 }
 #to-top{
+    border-radius: 1em;
+    border-style:none;
     position: fixed;
     bottom:0%;
     text-align: center;
     
     padding:0.5%;
-    background-color: #5cb6cc;
+    color:#ffffff;
+    background-color: #226e81;
+    text-shadow:
+		-1px -1px 0 #000,
+		1px -1px 0 #000,
+		-1px 1px 0 #000,
+		1px 1px 0 #000;
     
 
 }
