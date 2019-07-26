@@ -37,9 +37,7 @@ html{
     background-color: #226e81;
     
 }
-#gif-house{
-    margin: 0 5% 0 5%;
-}
+
 
 .rating-text{
     font-weight: bold;
@@ -58,20 +56,21 @@ html{
     float: left;
     width: 11.250em;
     height: 10.000em;
-    margin:0.5% 0.5% 1% 0.5%;
+    padding:1%;
+    margin:1%;
     
   }
 
-.grid-item--width2 { width: 16.250em; }
-.grid-item--width3 { width: 22.500em; }
-
-
-.grid-item--height2 { height: 16.250em; }
-.grid-item--height3 { height: 22.500em; }
-
 .gifs{
-    max-width: 11.250em;
-    max-height: 10.000em;
+    width:100%;
+    max-width:22.500em;
+    height:auto;
+    max-height:22.500em;
+    transition: transform .2s; /* Animation */
+  }
+  .gifs:hover{
+    transform: scale(1.5); /* (150% zoom - Note: if the zoom is too large, it will go outside of the viewport) */
+
   }
 .gif-holder{
     text-align: center;
@@ -97,6 +96,9 @@ html{
 }
 #theme-button{
     float:right;
+    border-style:none;
+    background-color:#ffffff;
+    border-radius: 1em;
 }
 
 

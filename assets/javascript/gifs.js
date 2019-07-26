@@ -1,7 +1,7 @@
 $(window).on("load", function () {
     var search_tags = ["Monty Python", "Simpsons", "Futuraama","Parks and Recreation","The Office","Dave Chapelle"];
     var id_list =[];
-    var obj_list =[];
+   
     var house = $("#gif-house");
     var tag_holder = $("#tag-holder");
     var search_btn = $("#search-button");
@@ -9,13 +9,13 @@ $(window).on("load", function () {
     var start = 10;
     var working = false;
     
-    class gif_obj{                                                                          //end result of data tree
-        constructor(url, tag, id, rate, thumb){                                                    //        root
-            this.gif_url = url;                                                             //       /    \
-            this.gif_tag = tag;                                                             //     tag    tag
-            this.gif_id = id;                                                               //    /   \  /   \
+    class gif_obj{                                                                       
+        constructor(url, tag, id, rate, thumb){                                                 
+            this.gif_url = url;                                                            
+            this.gif_tag = tag;                                                          
+            this.gif_id = id;                                                          
             this.gif_rating = rate;
-            this.gif_thumbnail=thumb;                                                         //  gif  gifgif  gif
+            this.gif_thumbnail=thumb;                                                       
             //this.gif_img = $('<img class="gifs">');
             this.rating_display = $('<p class="rating-text">');
             this.playing=false;
@@ -104,22 +104,25 @@ $(window).on("load", function () {
             }).then((response) => {
                 console.log(response);
                 response.data.forEach((element) => {
+                    if(id_list.indexOf(element.id)===-1){
                     let gif_room = $('<div class="gif-holder grid-item">');
                     let gif_img = $('<img class="gifs ">');
                     let obj = new gif_obj(element.images.downsized.url,index,element.id,
                     element.rating,element.images.original_still.url);
                     obj.make_gif(gif_room,gif_img);
                     gif_img.data("obj",obj);
-                    //get_grid_class(element,gif_img);
-                    obj_list.push(obj);
+                   
+                    
 
                     id_list.push(element.id);
+                    }
                 });
                     
             });
             });
           
     }
+    
 
     function scroll_api(){ //move timer to another function and combine with search_api
         search_api();
@@ -194,10 +197,12 @@ $(window).on("load", function () {
         if($(document.body).hasClass('day')){
             $(document.body).removeAttr("class");
             $(document.body).attr('class', 'night');
+            $('#theme-button').html('Theme: \uD83C\uDF16');
         }
         else{
             $(document.body).removeAttr("class");
             $(document.body).attr('class', 'day');
+            $('#theme-button').html('Theme: \u2600\uFE0F')
         }
     });
     
@@ -208,7 +213,8 @@ $(window).on("load", function () {
 
     });
     $grid.imagesLoaded().progress( function() {
-        $grid.masonry('layout');});
+        $grid.masonry('layout');
+    });
     
       /*
       // init Masonry
