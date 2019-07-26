@@ -38,7 +38,7 @@ html{
     
 }
 #gif-house{
-    margin: 0 10% 0 10%;
+    margin: 0 5% 0 5%;
 }
 
 .rating-text{
@@ -58,7 +58,7 @@ html{
     float: left;
     width: 11.250em;
     height: 10.000em;
-    padding:1%;
+    margin:0.5% 0.5% 1% 0.5%;
     
   }
 
@@ -72,8 +72,6 @@ html{
 .gifs{
     max-width: 11.250em;
     max-height: 10.000em;
-    padding:1%;
-
   }
 .gif-holder{
     text-align: center;

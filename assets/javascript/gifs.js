@@ -1,15 +1,11 @@
 $(window).on("load", function () {
-    var search_tags = ["Bob Ross", "Simpsons", "Honey Badger","shrek","The Office","Dave Chapelle"];
+    var search_tags = ["Monty Python", "Simpsons", "Futuraama","Parks and Recreation","The Office","Dave Chapelle"];
     var id_list =[];
     var obj_list =[];
-    //var gify_trend = "https://api.giphy.com/v1/gifs/trending?api_key=eKe5uDNPkEck1b04Tz1bRYnaiJtZ2OvW";
-    //var $x = jQuery.noConflict(); put in window load if use othe rlibraries
-    //tags need to be able to be deleted on an x button
-    //light and dark themes
-
     var house = $("#gif-house");
     var tag_holder = $("#tag-holder");
     var search_btn = $("#search-button");
+   
     var start = 10;
     var working = false;
     
@@ -100,9 +96,8 @@ $(window).on("load", function () {
     //var hood = new gif_hood("root");
 
     function search_api() { //used for first set of gifs assign data from apicall here
-        house.empty();
         search_tags.forEach((index) => {
-            var gif_search = "https://api.giphy.com/v1/gifs/search?q=" + index + "&limit=10&api_key=eKe5uDNPkEck1b04Tz1bRYnaiJtZ2OvW";
+            var gif_search = "https://api.giphy.com/v1/gifs/search?q=" + index + "&limit="+start+"&api_key=eKe5uDNPkEck1b04Tz1bRYnaiJtZ2OvW";
             $.ajax({
                 url: gif_search,
                 method: "GET"
@@ -110,12 +105,12 @@ $(window).on("load", function () {
                 console.log(response);
                 response.data.forEach((element) => {
                     let gif_room = $('<div class="gif-holder grid-item">');
-                    let gif_img = $('<img class="gifs">');
+                    let gif_img = $('<img class="gifs ">');
                     let obj = new gif_obj(element.images.downsized.url,index,element.id,
                     element.rating,element.images.original_still.url);
                     obj.make_gif(gif_room,gif_img);
                     gif_img.data("obj",obj);
-                    get_grid_class(element,gif_img);
+                    //get_grid_class(element,gif_img);
                     obj_list.push(obj);
 
                     id_list.push(element.id);
@@ -126,33 +121,12 @@ $(window).on("load", function () {
           
     }
 
-    function scroll_api(){
-        search_tags.forEach((index) =>{
-            var gif_search = "https://api.giphy.com/v1/gifs/search?q=" + index + "&limit=" + start +"&api_key=eKe5uDNPkEck1b04Tz1bRYnaiJtZ2OvW";
-            $.ajax({
-                url: gif_search,
-                method: "GET"
-            }).then((response)=>{
-                response.data.forEach((element) => {
-                        if(id_list.includes(element.id) === false){
-                            let gif_room = $('<div class="gif-holder grid-item">');
-                            let gif_img = $('<img class="gifs">');
-                            let obj = new gif_obj(element.images.downsized.url,index,element.id,element.rating,element.images.original_still.url);
-                            
-                            obj.make_gif(gif_room,gif_img);
-                            gif_img.data("obj",obj);
-                            id_list.push(element.id);
-                        }
-                });
-                start++;
-                setTimeout(()=>{
-                    working = false;
-                }, 4000);
-
-            });
-
-        });
-
+    function scroll_api(){ //move timer to another function and combine with search_api
+        search_api();
+        start++;
+        setTimeout(()=>{
+            working = false;
+        }, 2000);
     }
 
     function display_tag() {
@@ -163,25 +137,6 @@ $(window).on("load", function () {
             tag.html(index);
 
         });
-    }
-    function get_grid_class(data, elem){
-        if(data.images.downsized.width >= "360"){
-            elem.addClass("grid-item--width3");
-        }
-        else if(data.images.downsized.width >= "260"){
-            elem.addClass("grid-item--width2");
-
-        }
-        if(data.images.downsized.height >= "360"){
-            elem.addClass("grid-item--height3");
-        }
-        else if(data.images.downsized.height >= "260"){
-            elem.addClass("grid-item--height2");
-
-        }
-
-        
-
     }
 
     //*************************************************Code Starts Here*****************************************************/
@@ -197,7 +152,10 @@ $(window).on("load", function () {
     });
 
     display_tag();
+    house.empty();
     search_api();
+
+
     search_btn.on("click", (input) => {
         let tag_value = $("#tag-bar").val();
         if (search_tags.includes(tag_value) === false) {
@@ -205,6 +163,7 @@ $(window).on("load", function () {
         }
         display_tag();
         $("#tag-bar").val("");
+        house.empty();
         search_api();
 
     });
@@ -212,11 +171,10 @@ $(window).on("load", function () {
 
     tag_holder.on('click','.tag',(event)=>{
         let targeted = tag_holder.find(event.target)
-        $('.gifs').each(function(event){
-            
-
-        });
-        //tag_holder.find(event.target).remove();
+        search_tags.splice(search_tags.indexOf(targeted.html()),1);
+        targeted.remove();
+        house.empty();
+        search_api();
 
     });
 
@@ -242,10 +200,26 @@ $(window).on("load", function () {
             $(document.body).attr('class', 'day');
         }
     });
-    $('.grid').masonry({
-        
+    
+
+    var $grid =$('.grid').masonry({
         itemSelector: '.grid-item',
-        columnWidth: 300,
-      });
+        columnWidth: 160,
+
+    });
+    $grid.imagesLoaded().progress( function() {
+        $grid.masonry('layout');});
+    
+      /*
+      // init Masonry
+        var $grid = $('.grid').masonry({
+    // options...
+        });
+    // layout Masonry after each image loads
+        $grid.imagesLoaded().progress( function() {
+        $grid.masonry('layout');
+        });
+
+      */
  
 });
