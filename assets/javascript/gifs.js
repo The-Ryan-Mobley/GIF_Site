@@ -1,5 +1,5 @@
 $(window).on("load", function () {
-    var search_tags = ["Monty Python", "Simpsons", "Futuraama","Parks and Recreation","The Office","Dave Chapelle"];
+    var search_tags = ["Monty Python", "Simpsons", "Futurama","Parks and Recreation","The Office","Dave Chapelle"];
     var id_list =[];
    
     var house = $("#gif-house");
@@ -27,9 +27,7 @@ $(window).on("load", function () {
            this.rating_display.appendTo(room);
            this.rating_display.html('Rating :' + this.gif_rating);
         } 
-        detach_gif(){
-            this.gif_room.detach();
-        }
+        
         attach_gif(){
             this.gif_room.appendTo(house);
         }
@@ -44,56 +42,7 @@ $(window).on("load", function () {
             }
         }
     }
-    class node{
-        constructor(data){
-            this.data = data;
-            this.parent = null;
-            this.children =[];
-        }
-
-    }
-    //https://code.tutsplus.com/articles/data-structures-with-javascript-tree--cms-23393
-    class gif_hood{
-        constructor(data){
-            this.root = new node("root");
-            
-        }
-        
-        add_node(data, toData, traversal){
-            let gif_node = new node(data);
-            gif_node.parent = null;
-            toData.children.push(gif_node);
-            callback = function(node){
-                if (node.data === toData) {
-                    parent = node;
-                }
-            };
-            this.contains(callback, traversal);
-            if (parent) {
-                parent.children.push(gif_node);
-                gif_node.parent = parent;
-            } else {
-                throw new Error('Cannot add node to a non-existent parent.');
-            }
-                
-
-        }
-        depth_first_traversal(callback){
-            (function recurse(currentNode){
-                for (var i = 0, length = currentNode.children.length; i < length; i++) {
-                    recurse(currentNode.children[i]);
-                }
-                callback(currentNode);
-
-            })(this.root);
-            
-
-        }
-        
-
-
-    }
-    //var hood = new gif_hood("root");
+   
 
     function search_api() { //used for first set of gifs assign data from apicall here
         search_tags.forEach((index) => {
@@ -177,6 +126,7 @@ $(window).on("load", function () {
         search_tags.splice(search_tags.indexOf(targeted.html()),1);
         targeted.remove();
         house.empty();
+        id_list =[];
         search_api();
 
     });
