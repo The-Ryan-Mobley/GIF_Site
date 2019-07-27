@@ -51,7 +51,7 @@ html {
 }
 
 .grid {
-  max-width: 75.000em;
+  max-width: 100%;
 }
 
 .grid:after {
@@ -128,11 +128,15 @@ html {
 }
 
 @media (min-width: 320px) and (max-width: 480px) {
-  .grid-item{
+  .grid{
+      margin-left:10%;
+  }
+    .grid-item{
     width: 7.250em;
     height: 6.000em;
     margin-bottom:5.5%;
   }
+ 
   .tag{
     font-size:10px;
   }
