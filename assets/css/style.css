@@ -123,6 +123,7 @@ html {
     height: 7.000em;
     margin-bottom:2.5%;
   }
+  
 
 }
 
@@ -135,4 +136,7 @@ html {
   .tag{
     font-size:10px;
   }
+  #to-top{
+    right:0;
+}
 }
