@@ -66,7 +66,7 @@ $(window).on("load", function () {
 
     function scroll_api(){ //appends more images as they scroll on a 2 second interval
         search_api();
-        start++;
+        start+=3;
         setTimeout(()=>{
             working = false;
         }, 2000);
