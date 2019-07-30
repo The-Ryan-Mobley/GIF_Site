@@ -142,5 +142,10 @@ html {
   }
   #to-top{
     right:0;
-}
+  }
+  .gifs:hover {
+    width: 100%;
+    height: auto;
+    transform: scale(2.0);
+  }
 }
